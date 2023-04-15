@@ -6,6 +6,8 @@ const detailShopping = document.querySelector("#detailShoppingCar")
 const iconShopCar = document.querySelector(".shop-car")
 const orderItemContent = document.querySelector(".shopping-cart")
 const cardsContainer = document.querySelector(".cards-container")
+const closingProductDetail = document.querySelector(".product-detail-close")
+const productDetail = document.querySelector("#productDetail")
 
 let optionItem
 let items = []
@@ -27,22 +29,35 @@ for (let index = 0; index < 3; index++) {
     items.push(new item (image, nameItem, costItem, iconItem))
 }
 
-navEmail.addEventListener("click", toggleDesktopMenu) 
-hamIcoMenu.addEventListener("click", toggleMobileMenu)
-iconShopCar.addEventListener("click", shoppingCart)
+
+navEmail.addEventListener("click", toggleDesktopMenu) // email menu
+hamIcoMenu.addEventListener("click", toggleMobileMenu) // Mobile menu
+iconShopCar.addEventListener("click", shoppingCart) // Icon car 
+closingProductDetail.addEventListener("click", closeDetailProduct) // Aside product detail
 
 function toggleDesktopMenu() { 
     deskMenu.classList.toggle("inactive")
+    productDetail.classList.add("inactive")
+    detailShopping.classList.add("inactive")
 }
-
 function toggleMobileMenu() { 
     mobMenu.classList.toggle("inactive")
     detailShopping.classList.add("inactive")
+    productDetail.classList.add("inactive")
+}
+function detailProduct(){ 
+    productDetail.classList.remove("inactive")
+    deskMenu.classList.add("inactive")
+}
+function closeDetailProduct() {
+    productDetail.classList.add("inactive")
 }
 
 function shoppingCart() { 
     detailShopping.classList.toggle("inactive")
+    productDetail.classList.add("inactive")
     mobMenu.classList.add("inactive")
+    deskMenu.classList.add("inactive")
 
     items.forEach((item) => {
         optionItem = `
@@ -94,6 +109,7 @@ function renderProducts(arr) {
 
         const productImg = document.createElement("img")
         productImg.setAttribute("src", product.img) 
+        productImg.addEventListener("click", detailProduct)
 
         const productInfo = document.createElement("div")
         productInfo.classList.add("product-info") 
